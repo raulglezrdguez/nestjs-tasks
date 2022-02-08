@@ -36,11 +36,11 @@ export class TasksService {
     return id;
   }
 
-  updateTask(id: string, field: string, value: string): Task {
-    const index = this.tasks.findIndex((t) => t.id === id);
-    this.tasks[index][field] = value;
-    return this.tasks[index];
-  }
+  //   updateTask(id: string, field: string, value: string): Task {
+  //     const index = this.tasks.findIndex((t) => t.id === id);
+  //     this.tasks[index][field] = value;
+  //     return this.tasks[index];
+  //   }
 
   updateTaskStatus(id: string, status: TaskStatus): Task {
     const task = this.getTaskById(id);
