@@ -25,6 +25,29 @@ export class TasksController {
     return await this.tasksService.getTaskById(id);
   }
 
+  @Post()
+  createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
+    return this.tasksService.createTask(createTaskDto);
+  }
+
+  // //   @Post()
+  // //   createTask(@Body() body): string {
+  // //     console.log(body);
+
+  // //     return 'create task works';
+  // //   }
+  // //   @Post()
+  // //   createTask(
+  // //     @Body('title') title: string,
+  // //     @Body('description') description: string,
+  // //   ): Task {
+  // //     return this.tasksService.createTask(title, description);
+  // //   }
+  // @Post()
+  // createTask(@Body() createTaskDto: CreateTaskDto): Task {
+  //   return this.tasksService.createTask(createTaskDto);
+  // }
+
   // @Get()
   // getTasks(@Query() filterDto: GetTaskFilterDto): Task[] {
   //   if (Object.keys(filterDto).length > 0) {
@@ -43,24 +66,6 @@ export class TasksController {
   //   // }
 
   //   return task;
-  // }
-
-  // //   @Post()
-  // //   createTask(@Body() body): string {
-  // //     console.log(body);
-
-  // //     return 'create task works';
-  // //   }
-  // //   @Post()
-  // //   createTask(
-  // //     @Body('title') title: string,
-  // //     @Body('description') description: string,
-  // //   ): Task {
-  // //     return this.tasksService.createTask(title, description);
-  // //   }
-  // @Post()
-  // createTask(@Body() createTaskDto: CreateTaskDto): Task {
-  //   return this.tasksService.createTask(createTaskDto);
   // }
 
   // @Delete('/:id')
