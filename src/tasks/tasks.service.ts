@@ -33,6 +33,37 @@ export class TasksService {
     return this.tasksRepository.createTask(createTaskDto);
   }
 
+  async deleteTask(id: string): Promise<string> {
+    const task = await this.getTaskById(id);
+    await this.tasksRepository.remove(task);
+    return id;
+  }
+
+  async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+    let task = await this.getTaskById(id);
+    task.status = status;
+    task = await this.tasksRepository.save(task);
+
+    return task;
+  }
+
+  async getAllTasks(filterDto: GetTaskFilterDto): Promise<Task[]> {
+    return await this.tasksRepository.find();
+  }
+
+  // getAllTasks(): Task[] {
+  //   return this.tasks;
+  // }
+  // updateTaskStatus(id: string, status: TaskStatus): Task {
+  //   const task = this.getTaskById(id);
+  //   task.status = status;
+  //   return task;
+  // }
+  // deleteTask(id: string): string {
+  //   const task = this.getTaskById(id);
+  //   this.tasks = this.tasks.filter((t) => t.id !== task.id);
+  //   return id;
+  // }
   // createTask(createTaskDto: CreateTaskDto): Task {
   //   const { title, description } = createTaskDto;
   //   const task: Task = {
@@ -43,9 +74,6 @@ export class TasksService {
   //   };
   //   this.tasks.push(task);
   //   return task;
-  // }
-  // getAllTasks(): Task[] {
-  //   return this.tasks;
   // }
   // getTaskById(id: string): Task {
   //   const task = this.tasks.find((t) => t.id === id);
@@ -66,16 +94,6 @@ export class TasksService {
   //     );
   //   }
   //   return tasks;
-  // }
-  // deleteTask(id: string): string {
-  //   const task = this.getTaskById(id);
-  //   this.tasks = this.tasks.filter((t) => t.id !== task.id);
-  //   return id;
-  // }
-  // updateTaskStatus(id: string, status: TaskStatus): Task {
-  //   const task = this.getTaskById(id);
-  //   task.status = status;
-  //   return task;
   // }
   // updateTask(id: string, updateTaskDto: UpdateTaskDto): Task {
   //   const task = this.getTaskById(id);

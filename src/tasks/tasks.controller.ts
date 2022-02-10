@@ -30,6 +30,51 @@ export class TasksController {
     return this.tasksService.createTask(createTaskDto);
   }
 
+  @Delete('/:id')
+  deleteTask(@Param('id') id: string): Promise<string> {
+    return this.tasksService.deleteTask(id);
+  }
+
+  @Patch('/:id/status')
+  updateTaskStatus(
+    @Param('id') id: string,
+    @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+  ): Promise<Task> {
+    return this.tasksService.updateTaskStatus(id, updateTaskStatusDto.status);
+  }
+
+  @Get()
+  getTasks(@Query() filterDto: GetTaskFilterDto): Promise<Task[]> {
+    return this.tasksService.getAllTasks(filterDto);
+  }
+
+  // @Get()
+  // getTasks(@Query() filterDto: GetTaskFilterDto): Task[] {
+  //   if (Object.keys(filterDto).length > 0) {
+  //     return this.tasksService.getTasksWithFilter(filterDto);
+  //   } else {
+  //     return this.tasksService.getAllTasks();
+  //   }
+  // }
+
+  // @Patch('/:id/status')
+  // updateTaskStatus(
+  //   @Param('id') id: string,
+  //   @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+  // ) {
+  //   console.log('status:', updateTaskStatusDto);
+  //   return this.tasksService.updateTaskStatus(id, updateTaskStatusDto.status);
+  // }
+
+  // @Delete('/:id')
+  // deleteTask(@Param('id') id: string): string {
+  //   // const task = this.tasksService.getTaskById(id);
+  //   // if (!task) {
+  //   //   throw new NotFoundException(`Task with id: ${id}, not found`);
+  //   // }
+  //   return this.tasksService.deleteTask(id);
+  // }
+
   // //   @Post()
   // //   createTask(@Body() body): string {
   // //     console.log(body);
@@ -48,15 +93,6 @@ export class TasksController {
   //   return this.tasksService.createTask(createTaskDto);
   // }
 
-  // @Get()
-  // getTasks(@Query() filterDto: GetTaskFilterDto): Task[] {
-  //   if (Object.keys(filterDto).length > 0) {
-  //     return this.tasksService.getTasksWithFilter(filterDto);
-  //   } else {
-  //     return this.tasksService.getAllTasks();
-  //   }
-  // }
-
   // @Get('/:id')
   // getTaskById(@Param('id') id: string): Task {
   //   const task = this.tasksService.getTaskById(id);
@@ -66,24 +102,6 @@ export class TasksController {
   //   // }
 
   //   return task;
-  // }
-
-  // @Delete('/:id')
-  // deleteTask(@Param('id') id: string): string {
-  //   // const task = this.tasksService.getTaskById(id);
-  //   // if (!task) {
-  //   //   throw new NotFoundException(`Task with id: ${id}, not found`);
-  //   // }
-  //   return this.tasksService.deleteTask(id);
-  // }
-
-  // @Patch('/:id/status')
-  // updateTaskStatus(
-  //   @Param('id') id: string,
-  //   @Body() updateTaskStatusDto: UpdateTaskStatusDto,
-  // ) {
-  //   console.log('status:', updateTaskStatusDto);
-  //   return this.tasksService.updateTaskStatus(id, updateTaskStatusDto.status);
   // }
 
   // @Patch('/:id')
