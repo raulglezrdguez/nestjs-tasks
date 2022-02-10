@@ -51,7 +51,10 @@ export class TasksService {
     return this.tasksRepository.getTasksWithFilter(filterDto);
   }
 
-  updateTask(updateTaskDto: UpdateTaskDto): Promise<Task> {}
+  async updateTask(id: string, updateTaskDto: UpdateTaskDto): Promise<Task> {
+    let task = await this.getTaskById(id);
+    return await this.tasksRepository.updateTask(task, updateTaskDto);
+  }
 
   // getAllTasks(): Task[] {
   //   return this.tasks;

@@ -2,6 +2,7 @@ import { InternalServerErrorException } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTaskFilterDto } from './dto/get-tasks-filter.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskStatus } from './task-status.enum';
 import { Task } from './task.entity';
 
@@ -42,5 +43,16 @@ export class TasksRepository extends Repository<Task> {
     const tasks = await query.getMany();
 
     return tasks;
+  }
+
+  async updateTask(task: Task, updateTaskDto: UpdateTaskDto): Promise<Task> {
+    const { title, description, status } = updateTaskDto;
+
+    task.title = title || task.title;
+    task.description = description || task.description;
+    task.status = status || task.status;
+
+    const newTask = await this.save(task);
+    return newTask;
   }
 }

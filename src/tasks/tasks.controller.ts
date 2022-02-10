@@ -48,6 +48,18 @@ export class TasksController {
     return this.tasksService.getTasksWithFilter(tasksFilterDto);
   }
 
+  @Patch('/:id')
+  updateTask(
+    @Param('id') id: string,
+    @Body() updateTaskDto: UpdateTaskDto,
+  ): Promise<Task> {
+    return this.tasksService.updateTask(id, updateTaskDto);
+  }
+  // @Patch('/:id')
+  // updateTask(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+  //   return this.tasksService.updateTask(id, updateTaskDto);
+  // }
+
   // @Get()
   // getTasks(@Query() filterDto: GetTaskFilterDto): Task[] {
   //   if (Object.keys(filterDto).length > 0) {
@@ -102,10 +114,5 @@ export class TasksController {
   //   // }
 
   //   return task;
-  // }
-
-  // @Patch('/:id')
-  // updateTask(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
-  //   return this.tasksService.updateTask(id, updateTaskDto);
   // }
 }
