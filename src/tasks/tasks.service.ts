@@ -47,9 +47,11 @@ export class TasksService {
     return task;
   }
 
-  async getAllTasks(filterDto: GetTaskFilterDto): Promise<Task[]> {
-    return await this.tasksRepository.find();
+  getTasksWithFilter(filterDto: GetTaskFilterDto): Promise<Task[]> {
+    return this.tasksRepository.getTasksWithFilter(filterDto);
   }
+
+  updateTask(updateTaskDto: UpdateTaskDto): Promise<Task> {}
 
   // getAllTasks(): Task[] {
   //   return this.tasks;

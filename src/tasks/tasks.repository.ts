@@ -1,6 +1,7 @@
 import { InternalServerErrorException } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { GetTaskFilterDto } from './dto/get-tasks-filter.dto';
 import { TaskStatus } from './task-status.enum';
 import { Task } from './task.entity';
 
@@ -21,5 +22,25 @@ export class TasksRepository extends Repository<Task> {
     }
 
     return task;
+  }
+
+  async getTasksWithFilter(tasksFilterDto: GetTaskFilterDto): Promise<Task[]> {
+    const { status, search } = tasksFilterDto;
+    const query = this.createQueryBuilder('task');
+
+    if (status) {
+      query.where('task.status = :status', { status });
+    }
+
+    if (search) {
+      query.orWhere(
+        'lower(task.title) like lower(:search) or lower(task.description) like lower(:search)',
+        { search: `%${search}%` },
+      );
+    }
+
+    const tasks = await query.getMany();
+
+    return tasks;
   }
 }
