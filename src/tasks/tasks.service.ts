@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { TaskStatus } from './task-status.enum';
 // import { v4 as uuid } from 'uuid';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -52,7 +48,7 @@ export class TasksService {
   }
 
   async updateTask(id: string, updateTaskDto: UpdateTaskDto): Promise<Task> {
-    let task = await this.getTaskById(id);
+    const task = await this.getTaskById(id);
     return await this.tasksRepository.updateTask(task, updateTaskDto);
   }
 
