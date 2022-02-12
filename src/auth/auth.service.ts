@@ -3,8 +3,8 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { threadId } from 'worker_threads';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
-import { JwtPayload } from './jwt-payload.interface';
-import { JwtToken } from './jwt-token.interface';
+import { JwtPayload } from './jwt/jwt-payload.interface';
+import { JwtToken } from './jwt/jwt-token.interface';
 import { UsersRepository } from './users.repository';
 
 @Injectable()
