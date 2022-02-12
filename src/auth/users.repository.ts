@@ -37,4 +37,22 @@ export class UsersRepository extends Repository<User> {
       }
     }
   }
+
+  async verifyCredentials(
+    authCredentialsDto: AuthCredentialsDto,
+  ): Promise<boolean> {
+    const { username, password } = authCredentialsDto;
+    const user = await this.findOne({ username });
+
+    if (user) {
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 }
