@@ -8,9 +8,11 @@ import { TasksRepository } from './tasks.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './task.entity';
 import { User } from 'src/auth/user.entity';
+import { Logger } from '@nestjs/common';
 
 @Injectable()
 export class TasksService {
+  private logger = new Logger('TasksService', { timestamp: true });
   constructor(
     @InjectRepository(TasksRepository)
     private tasksRepository: TasksRepository,
@@ -20,6 +22,9 @@ export class TasksService {
     const task = await this.tasksRepository.findOne({ id, user });
 
     if (!task) {
+      this.logger.error(
+        `Task with id: '${id}' for user: ${user.username}, not found`,
+      );
       throw new NotFoundException(`Task with id: '${id}', not found`);
     }
 

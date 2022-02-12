@@ -6,9 +6,12 @@ import { GetTaskFilterDto } from './dto/get-tasks-filter.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskStatus } from './task-status.enum';
 import { Task } from './task.entity';
+import { Logger } from '@nestjs/common';
 
 @EntityRepository(Task)
 export class TasksRepository extends Repository<Task> {
+  private logger = new Logger('TasksRepository', { timestamp: true });
+
   async createTask(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
     const { title, description } = createTaskDto;
     let task = this.create({
@@ -18,9 +21,16 @@ export class TasksRepository extends Repository<Task> {
       user,
     });
 
-    task = await this.save(task);
+    try {
+      task = await this.save(task);
 
-    if (!task) {
+      if (!task) {
+        throw new InternalServerErrorException(
+          `Error creating task, try again`,
+        );
+      }
+    } catch (error) {
+      this.logger.error(`Error creating task, try again`, error.stack);
       throw new InternalServerErrorException(`Error creating task, try again`);
     }
 
