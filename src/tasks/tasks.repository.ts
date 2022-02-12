@@ -27,17 +27,22 @@ export class TasksRepository extends Repository<Task> {
     return task;
   }
 
-  async getTasksWithFilter(tasksFilterDto: GetTaskFilterDto): Promise<Task[]> {
+  async getTasksWithFilter(
+    tasksFilterDto: GetTaskFilterDto,
+    user: User,
+  ): Promise<Task[]> {
     const { status, search } = tasksFilterDto;
     const query = this.createQueryBuilder('task');
 
+    query.where({ user });
+
     if (status) {
-      query.where('task.status = :status', { status });
+      query.andWhere('task.status = :status', { status });
     }
 
     if (search) {
-      query.orWhere(
-        'lower(task.title) like lower(:search) or lower(task.description) like lower(:search)',
+      query.andWhere(
+        '(lower(task.title) like lower(:search) or lower(task.description) like lower(:search))',
         { search: `%${search}%` },
       );
     }

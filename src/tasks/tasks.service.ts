@@ -44,8 +44,8 @@ export class TasksService {
     return task;
   }
 
-  getTasksWithFilter(filterDto: GetTaskFilterDto): Promise<Task[]> {
-    return this.tasksRepository.getTasksWithFilter(filterDto);
+  getTasksWithFilter(filterDto: GetTaskFilterDto, user: User): Promise<Task[]> {
+    return this.tasksRepository.getTasksWithFilter(filterDto, user);
   }
 
   async updateTask(id: string, updateTaskDto: UpdateTaskDto): Promise<Task> {
