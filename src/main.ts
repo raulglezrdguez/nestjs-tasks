@@ -5,7 +5,7 @@ import { TransformInterceptor } from './transform.interceptor';
 import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
-  const port = 3000;
+  const port = process.env.PORT || 3000;
   const logger = new Logger();
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
