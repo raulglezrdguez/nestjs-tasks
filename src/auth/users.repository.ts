@@ -21,7 +21,6 @@ export class UsersRepository extends Repository<User> {
         username,
         password: hashPassword,
       });
-      console.log(user);
       user = await this.save(user);
 
       if (!user) {
