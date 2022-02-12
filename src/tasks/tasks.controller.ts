@@ -25,8 +25,11 @@ export class TasksController {
   constructor(private tasksService: TasksService) {}
 
   @Get('/:id')
-  async getTaskById(@Param('id') id: string): Promise<Task> {
-    return await this.tasksService.getTaskById(id);
+  async getTaskById(
+    @Param('id') id: string,
+    @GetUser() user: User,
+  ): Promise<Task> {
+    return await this.tasksService.getTaskById(id, user);
   }
 
   @Post()
@@ -38,16 +41,21 @@ export class TasksController {
   }
 
   @Delete('/:id')
-  deleteTask(@Param('id') id: string): Promise<string> {
-    return this.tasksService.deleteTask(id);
+  deleteTask(@Param('id') id: string, @GetUser() user: User): Promise<string> {
+    return this.tasksService.deleteTask(id, user);
   }
 
   @Patch('/:id/status')
   updateTaskStatus(
     @Param('id') id: string,
     @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+    @GetUser() user: User,
   ): Promise<Task> {
-    return this.tasksService.updateTaskStatus(id, updateTaskStatusDto.status);
+    return this.tasksService.updateTaskStatus(
+      id,
+      updateTaskStatusDto.status,
+      user,
+    );
   }
 
   @Get()
@@ -62,8 +70,9 @@ export class TasksController {
   updateTask(
     @Param('id') id: string,
     @Body() updateTaskDto: UpdateTaskDto,
+    @GetUser() user: User,
   ): Promise<Task> {
-    return this.tasksService.updateTask(id, updateTaskDto);
+    return this.tasksService.updateTask(id, updateTaskDto, user);
   }
   // @Patch('/:id')
   // updateTask(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
