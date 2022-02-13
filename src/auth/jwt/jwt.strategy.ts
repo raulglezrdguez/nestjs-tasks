@@ -18,6 +18,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       secretOrKey: configService.get('JWT_SECRET'),
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     });
+    console.log('************-----------');
+    console.log(configService.get('JWT_SECRET'));
   }
 
   async validate(payload: JwtPayload): Promise<User> {
