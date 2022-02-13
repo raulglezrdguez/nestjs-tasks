@@ -19,13 +19,28 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { Task } from './task.entity';
 import { TasksService } from './tasks.service';
 import { Logger } from '@nestjs/common';
+import {
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
+@ApiTags('tasks')
 @Controller('tasks')
 @UseGuards(AuthGuard())
 export class TasksController {
   private logger = new Logger('TasksController', { timestamp: true });
   constructor(private tasksService: TasksService) {}
 
+  @ApiOkResponse({
+    description: 'Retrieved task by ID successfully',
+    type: Task,
+  })
+  @ApiNotFoundResponse({ description: 'No task found for ID' })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal server error',
+  })
   @Get('/:id')
   async getTaskById(
     @Param('id') id: string,

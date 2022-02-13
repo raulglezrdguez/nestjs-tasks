@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TasksModule } from './tasks/tasks.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-// import { configValidationSchema } from 'config.schema';
+import { configValidationSchema } from 'config.schema';
 
 // const configuration = () => ({
 //   DB_TYPE: 'postgres',
@@ -16,8 +16,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      // validationSchema: configValidationSchema, // this dont work
-      // envFilePath: [`.env.stage.${process.env.STAGE}`],
+      validationSchema: configValidationSchema, // this dont work
+      envFilePath: [`.env.stage.${process.env.STAGE}`],
       // load: [configuration],
     }),
     TasksModule,
