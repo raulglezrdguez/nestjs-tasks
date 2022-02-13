@@ -32,3 +32,7 @@ $ yarn start:prod
     database: 'tasks',
 }
 ```
+
+## Screenshot
+
+![swagger](/screenshots/swagger.jpg)
